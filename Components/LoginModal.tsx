@@ -1,10 +1,27 @@
 "use client"
 
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { ImSpinner2 } from "react-icons/im";
+
 type LoginModalProps = {
   onClose: () => void;
 };
 
 function LoginModal({ onClose }: LoginModalProps) {
+    const [loading, setLoading] = useState(false)
+    const router = useRouter()
+
+    function handleGuestLogin() {
+        setLoading(true)
+
+        setTimeout(() => {
+            onClose();
+            router.push("/for-you")
+        }, 1000)
+    }
+
+
   return (
         <>
         <div className="fixed inset-0 z-[9999] bg-black/75 flex justify-center items-center">
@@ -13,11 +30,18 @@ function LoginModal({ onClose }: LoginModalProps) {
                     <div className="text-center text-[20px] font-bold text-[#032b41] mb-[24px]">
                         Log in to Summarist
                     </div>
-                    <button className="relative flex items-center bg-[#3a579d] text-white justify-center w-full h-[40px] rounded-sm cursor-pointer">
+                    <button disabled={loading} className="relative flex items-center bg-[#3a579d] text-white justify-center w-full h-[40px] rounded-sm cursor-pointer"
+                    onClick={handleGuestLogin}>
+                        {loading ? (
+                            <ImSpinner2 className="animate-spin text-[20px]" />
+                        ) : (
+                            <>
                         <figure className="bg-white flex items-center justify-center w-[36px] h-[36px] rounded-sm absolute left-[2px]">
                             <img className="w-[24px] h-[24px]" src="/assets/pngwing.com.png" alt="" />
                         </figure>
-                    Login as guest
+                    Login as guest 
+                    </>
+                )}
                     </button>
                     <div className="flex items-center gap-[16px] my-[16px]">
                         <div className="flex-1 h-px bg-[#bac8ce]"></div>
