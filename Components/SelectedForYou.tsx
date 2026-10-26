@@ -28,7 +28,7 @@ import { useState, useEffect } from  "react";
         
              ) : (
         
-            <a href="" className="flex bg-[#fbefd6] rounded-sm mb-[24px] w-[calc((100%/3)*2)] justify-between p-[24px] gap-[24px]">
+            <a href="/book/f9gy1gpai8" className="flex bg-[#fbefd6] rounded-sm mb-[24px] w-[calc((100%/3)*2)] justify-between p-[24px] gap-[24px]">
             <div className="sm:flex-col text-[#032b41] w-[40%]">
                 How constant innovation creates radically successful businesses
                 </div>

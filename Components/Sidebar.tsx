@@ -5,6 +5,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 import { GoGear } from "react-icons/go";
 import { HiOutlineQuestionMarkCircle } from "react-icons/hi2";
 import { FiLogOut } from "react-icons/fi";
+import { GiMoneyStack } from "react-icons/gi";
 
 function Sidebar() {
     return(
@@ -65,12 +66,21 @@ function Sidebar() {
                 </a>
             </div>
             <div className="">
-                <a className="flex items-center h-[56px] text-[#032b41] mb-[8px] cursor-pointer">
+                <a className="flex items-center h-[56px] text-[#032b41] mb-[8px] cursor-not-allowed">
                     <div className="w-[5px] h-full bg-transparent mr-[16px]"></div>
                     <div className="display items-center justify-center mr-[8px]">
                         <HiOutlineQuestionMarkCircle className="w-[24px] h-[24px]" />
                     </div>
                     <div className="">Help & Support</div>
+                </a>
+            </div>
+            <div className="">
+                <a className="flex items-center h-[56px] text-[#032b41] mb-[8px] cursor-pointer"href="/sales">
+                    <div className="w-[5px] h-full bg-transparent mr-[16px]"></div>
+                    <div className="display items-center justify-center mr-[8px]">
+                        <GiMoneyStack className="w-[24px] h-[24px]" />
+                    </div>
+                    <div className="">Manage Subscription</div>
                 </a>
             </div>
             <div className="">

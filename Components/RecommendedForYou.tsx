@@ -17,7 +17,7 @@ function RecommendedForYou() {
         async function fetchBooks() {
             const response = await fetch("https://us-central1-summaristt.cloudfunctions.net/getBooks?status=recommended");
             const data = await response.json();
-
+console.log("Recommended books:", data)
             setBooks(data);
             await new Promise((resolve) => setTimeout(resolve, 1000))
             setLoading(false);
