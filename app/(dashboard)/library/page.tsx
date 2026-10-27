@@ -2,12 +2,19 @@
 
 import { useDispatch } from "react-redux";
 import { openModal } from "@/app/redux/modalSlice";
+import { useAuth } from "@/app/context/AuthProvider";
 
 
 function Library() {
     const dispatch = useDispatch();
-    return (
+    const { user, loading } = useAuth();
 
+    if (loading) {
+    return <div>Checking authentication...</div>;
+}
+    
+    if (!user) {
+    return (
         <>
          <div className="p-[40px] w-full">
             <div className="max-w-[1070px] w-full mx-auto px-[24px]">
@@ -15,7 +22,7 @@ function Library() {
                     library
                 </div>
                 <div className="max-w-[460px] flex flex-col items-center mx-auto">
-                    <img className="w-full h-full" src="./assets/login.png" alt="" />
+                    <img className="w-full h-full" src="/assets/login.png" alt="" />
                 
                 <div className="text-[24px] font-bold text-[#032b41] text-center mb-[16px]">
                     Log in to your account to see your library
@@ -25,15 +32,17 @@ function Library() {
                 </div>
             </div>
         </div>
-
+        </>
+);
+}
         
 
 
 
 
-
-
-       <div className="max-w-[1070px] w-full mx-auto mx-[24px]">
+return (
+ <>
+       <div className="max-w-[1070px] w-full mx-auto px-[24px]">
         <div className="py-[40px] w-full">
             <div className="text-[22px] font-bold text-[#032b41] mb-[16px]">
                 Saved Books

@@ -1,3 +1,4 @@
+
 import Sidebar from "@/Components/Sidebar";
 import Searchbar from "@/Components/Searchbar";
 
@@ -10,7 +11,7 @@ export default function DashboardLayout({
     <div className="flex min-h-screen">
       <Sidebar />
 
-      <div className="ml-[200px] flex-1 min-w-0">
+      <div className="ml-[200px] w-[calc(100%-200px)] min-w-0">
         <Searchbar />
         <main>{children}</main>
       </div>
