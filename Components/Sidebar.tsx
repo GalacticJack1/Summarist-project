@@ -60,7 +60,7 @@ function Sidebar() {
                     </a>                 
                 </div>
                 <div className="">
-                    <a className="flex items-center h-[56px] text-[#032b41] mb-[8px] cursor-pointer" href="#">
+                    <a className="flex items-center h-[56px] text-[#032b41] mb-[8px] cursor-not-allowed" href="#">
                     <div className="active:bg-[#2bd97c] w-[5px] h-full mr-[16px]"></div>
                     <div className="flex items-center justify-center mr-[8px]">
                         <BsPen className="w-[24px] h-[24px]"/>
@@ -69,12 +69,12 @@ function Sidebar() {
                     </a>                 
                 </div>
                 <div className="">
-                    <a className="flex items-center h-[56px] text-[#032b41] mb-[8px] cursor-pointer" href="#">
+                    <a className="flex items-center h-[56px] text-[#032b41] mb-[8px] cursor-pointer" href="/search-engine">
                     <div className="active:bg-[#2bd97c] w-[5px] h-full mr-[16px]"></div>
                     <div className="flex items-center justify-center mr-[8px]">
                         <FaMagnifyingGlass className="w-[24px] h-[24px]"/>
                     </div>
-                    <div className="text-[#032b41] cursor-not-allowed">Search</div>
+                    <div className="text-[#032b41] cursor-pointer">Search</div>
                     </a>                 
                 </div>
                 </div>
@@ -110,7 +110,7 @@ function Sidebar() {
                 </a>
             </div>
             <div className="">
-                <button type="button" onClick={handleAuthClick} disabled={loading} className="flex items-center h-[56px] text-[#032b41] mb-[8px] cursor-pointer" href="/logout">
+                <button type="button" onClick={handleAuthClick} disabled={loading} className="flex items-center h-[56px] text-[#032b41] mb-[8px] cursor-pointer">
                     <div className="w-[5px] h-full bg-transparent mr-[16px]"></div>
                     <div className="display items-center justify-center mr-[8px]">
                         <FiLogOut className="w-[24px] h-[24px]" />
