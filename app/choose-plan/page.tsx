@@ -5,10 +5,13 @@ import { PiPottedPlantFill } from "react-icons/pi";
 import { FaHandshake } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { openModal } from "@/app/redux/modalSlice";
 
 function ChoosePlan() {
     const [openAccordion, setOpenAccordion] = useState<number | null>(null);
-
+    const dispatch = useDispatch();
+    const [ selectedPlan, setSelectedPlan ] = useState("yearly")
 
 
     return (
@@ -60,43 +63,62 @@ function ChoosePlan() {
                             <div className="section-title text-[32px] text-[#032b41] text-center mb-[32px] font-bold">
                                 Choose the plan that fits you
                             </div>
-                            <div className="plan-card active:rounded-sm active:border-[#2be080] flex gap-[24px] p-[24px] bg-[#f1f6f4] rounded-sm border-[#bac8ce] border-[4px] cursor-pointer max-w-[680px] mx-auto">
+
+                            
+
+
+                            <button 
+                            type="button"
+                            onClick={() => setSelectedPlan("yearly")}
+                            className={`plan-card active:rounded-sm border-[#2be080] flex gap-[24px] p-[24px] bg-[#f1f6f4] rounded-sm border-[4px] cursor-pointer w-[680px] mx-auto transition-colors duration-100 
+                                ${selectedPlan === "yearly" ? "border-[#2be080]" : "border-[#bac8ce]" }`}
+                            >
                                 <div className="plan-circle relative w-[24px] h-[24px] rounded-full border-[#000] border-[2px] flex items-center justify-center">
-                                    <div className="plan-circle-dot absolute w-[6px] h-[6px] bg-[#000] rounded-full">
-                                    </div>
+                                    {selectedPlan === "yearly" && (
+                                    <div className="plan-circle-dot absolute w-[6px] h-[6px] bg-[#000] rounded-full" />
+                                    )}                   
                                 </div>
                                 <div className="card-content">
                                     <div className="text-[18px] font-semibold text-[#032b41] mb-[8px]">Premium Plus Yearly</div>
                                     <div className="text-[24px] font-bold text-[#032b41] mb-[8px]">$99.99/year</div>
                                     <div className="text-[#6b757b] text-[14px]">7-day trial included</div>
                                 </div>
-                            </div>
+                            </button>
                             <div className="plan-separator text-[14px] text-[#6b757b] flex items-center gap-[8px] max-w-[240px] mt-[24px] mb-[24px] mx-auto">
                                 <div className="plan-separator flex-1 h-[1px] bg-[#bac8ce]"></div>
                                 <div className="div">or</div>
                                 <div className="plan-separator flex-1 h-[1px] bg-[#bac8ce]"></div>
                             </div>
-                            <div className="plan-card active:rounded-sm active:border-[#2be080] flex gap-[24px] p-[24px] bg-[#f1f6f4] rounded-sm border-[#bac8ce] border-[4px] cursor-pointer max-w-[680px] mx-auto">
+                            <button 
+                            type="button"
+                            onClick={() => setSelectedPlan("monthly")}
+                            className={`plan-card rounded-sm flex gap-[24px] p-[24px] bg-[#f1f6f4] rounded-sm  border-[4px] cursor-pointer w-[680px] mx-auto transition-colors duration-100
+                            ${selectedPlan === "monthly" ? "border-[#2be080]" : "border-[#bac8ce]"}`}>
                                 <div className="plan-circle relative w-[24px] h-[24px] rounded-full border-[#000] border-[2px] flex items-center justify-center">
-                                    <div className="plan-circle-dot absolute w-[6px] h-[6px] bg-[#000] rounded-full">
-                                    </div>
+                                    {selectedPlan === "monthly" && (
+                                    <div className="plan-circle-dot absolute w-[6px] h-[6px] bg-[#000] rounded-full" />
+                                    )}     
                                 </div>
                                 <div className="card-content">
                                     <div className="text-[18px] font-semibold text-[#032b41] mb-[8px]">Premium Monthly</div>
                                     <div className="text-[24px] font-bold text-[#032b41] mb-[8px]">$9.99/month</div>
                                     <div className="text-[#6b757b] text-[14px]">No trial included</div>
                                 </div>
-                            </div>
+                            </button>
                             <div className="signup-container bg-[#fff] sticky bottom-0 z-1 p-[32px] flex flex-col items-center gap-[16px]">
                                 <span className="button-wrapper w-[300px] ">
-                                    <button className="bg-[#2bd97c] text-[#032b41] h-[40px] rounded-sm text-[16px] transition-colors duration-[.2] flex items-center justify-center min-w-[180px] w-full cursor-pointer">
+                                    <button  onClick={() => dispatch(openModal())} className="bg-[#2bd97c] text-[#032b41] h-[40px] rounded-sm text-[16px] transition-colors duration-[.2] flex items-center justify-center min-w-[180px] w-full cursor-pointer hover:bg-[#20ba68]">
                                         <span>
-                                            Start your first month!
+                                            {selectedPlan === "yearly" ? "Start your free 7 day trial!" : "Start your first month"}
                                         </span>
                                     </button>
                                 </span>
-                                <div className="text-[12px] text-[#6b757b] text-center">30-day money back guarantee, no questions asked.</div>
+                                <div className="text-[12px] text-[#6b757b] text-center">{selectedPlan === "yearly" ? "Cancel your trial at any time before it ends, and you won’t be charged." : "30-day money back guarantee, no questions asked."}</div>
                             </div>
+
+                            
+
+
                             <div className="faq-wrapper">
                                 <div className="accordion-card border-b border-[#ddd] mb-[8px]">
                                     <button
@@ -112,19 +134,24 @@ function ChoosePlan() {
                                         </span>
 
                                         <IoIosArrowDown
-                                            className={`w-[24px] min-w-[24px] h-[24px] transition-transform duration-100 ${openAccordion === 1 ? "rotate-180" : "rotate-0"
-                                                }`}
-                                        />
+                                            className={`w-[24px] min-w-[24px] h-[24px] transition-transform duration-100 ${openAccordion === 1 ? "rotate-180" : "rotate-0"}`}/>
                                     </button>
-                                    {openAccordion === 1 && (
-                                        <div
-                                            id="trial-answer"
-                                            className="accordion-body min-h-[1px] pb-[24px] text-[#394547] leading-[1.5]">
-                                            Begin your complimentary 7-day trial with a Summarist annual membership.
-                                            You are under no obligation to continue your subscription, and you will
-                                            only be billed when the trial period expires.
+
+                                    <div
+                                        id="trial-answer"
+                                        inert={openAccordion !== 1}
+                                        className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${openAccordion === 1
+                                            ? "grid-rows-[1fr]"
+                                            : "grid-rows-[0fr]"
+                                            }`}
+                                    >
+                                        <div className="overflow-hidden min-h-0">
+                                            <div className="accordion-body pb-[24px] text-[#394547] leading-[1.5]">
+                                                Begin your complimentary 7-day trial with a Summarist annual membership. You are under no obligation to continue your subscription, and you will only be billed when the trial period expires. With Premium access, you can learn at your own pace and as frequently as you desire, and you may terminate your subscription prior to the conclusion of the 7-day free trial.
+                                            </div>
                                         </div>
-                                    )}
+                                    </div>
+
                                 </div>
                                 <div className="accordion-card border-b border-[#ddd] mb-[8px]">
                                     <button
@@ -141,15 +168,24 @@ function ChoosePlan() {
 
                                         <IoIosArrowDown
                                             className={`w-[24px] min-w-[24px] h-[24px] transition-transform duration-100 ${openAccordion === 2 ? "rotate-180" : "rotate-0"
-                                                }`}/>
+                                                }`} />
                                     </button>
-                                    {openAccordion === 2 && (
-                                        <div
-                                            id="trial-answer"
-                                            className="accordion-body min-h-[1px] pb-[24px] text-[#394547] leading-[1.5]">
-                                            While an annual plan is active, it is not feasible to switch to a monthly plan. However, once the current month ends, transitioning from a monthly plan to an annual plan is an option.
+
+                                    <div
+                                        id="trial-answer"
+                                        inert={openAccordion !== 2}
+                                        className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${openAccordion === 2
+                                            ? "grid-rows-[1fr]"
+                                            : "grid-rows-[0fr]"
+                                            }`}
+                                    >
+                                        <div className="overflow-hidden min-h-0">
+                                            <div className="accordion-body pb-[24px] text-[#394547] leading-[1.5]">
+                                                While an annual plan is active, it is not feasible to switch to a monthly plan. However, once the current month ends, transitioning from a monthly plan to an annual plan is an option
+                                            </div>
                                         </div>
-                                    )}
+                                    </div>
+
                                 </div>
                                 <div className="accordion-card border-b border-[#ddd] mb-[8px]">
                                     <button
@@ -165,15 +201,24 @@ function ChoosePlan() {
                                         </span>
                                         <IoIosArrowDown
                                             className={`w-[24px] min-w-[24px] h-[24px] transition-transform duration-100 ${openAccordion === 3 ? "rotate-180" : "rotate-0"
-                                                }`}/>
+                                                }`} />
                                     </button>
-                                    {openAccordion === 3 && (
-                                        <div
-                                            id="trial-answer"
-                                            className="accordion-body min-h-[1px] pb-[24px] text-[#394547] leading-[1.5]">
-                                            Premium membership provides you with the ultimate Summarist experience, including unrestricted entry to many best-selling books high-quality audio, the ability to download titles for offline reading, and the option to send your reads to your Kindle.
+
+                                    <div
+                                        id="trial-answer"
+                                        inert={openAccordion !== 3}
+                                        className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${openAccordion === 3
+                                            ? "grid-rows-[1fr]"
+                                            : "grid-rows-[0fr]"
+                                            }`}
+                                    >
+                                        <div className="overflow-hidden min-h-0">
+                                            <div className="accordion-body pb-[24px] text-[#394547] leading-[1.5]">
+                                                Premium membership provides you with the ultimate Summarist experience, including unrestricted entry to many best-selling books high-quality audio, the ability to download titles for offline reading, and the option to send your reads to your Kindle.
+                                            </div>
                                         </div>
-                                    )}
+                                    </div>
+
                                 </div>
                                 <div className="accordion-card border-b border-[#ddd] mb-[8px]">
                                     <button
@@ -186,7 +231,7 @@ function ChoosePlan() {
                                         className="accordion-header flex w-full justify-between items-center cursor-pointer py-[24px] gap-[8px] text-left"
                                     >
                                         <span className="accordion-title font-medium text-[24px] text-[#032b41]">
-                                            Can I cancel during my trial or subscription?
+                                           Can I cancel during my trial or subscription?
                                         </span>
 
                                         <IoIosArrowDown
@@ -195,14 +240,22 @@ function ChoosePlan() {
                                         />
                                     </button>
 
-                                    {openAccordion === 4 && (
-                                        <div
-                                            id="trial-answer"
-                                            className="accordion-body min-h-[1px] pb-[24px] text-[#394547] leading-[1.5]"
-                                        >
-                                            You will not be charged if you cancel your trial before its conclusion. While you will not have complete access to the entire Summarist library, you can still expand your knowledge with one curated book per day.
+
+                                    <div
+                                        id="trial-answer"
+                                        inert={openAccordion !== 4}
+                                        className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${openAccordion === 4
+                                                ? "grid-rows-[1fr]"
+                                                : "grid-rows-[0fr]"
+                                            }`}
+                                    >
+                                        <div className="overflow-hidden min-h-0">
+                                            <div className="accordion-body pb-[24px] text-[#394547] leading-[1.5]">
+                                                You will not be charged if you cancel your trial before its conclusion. While you will not have complete access to the entire Summarist library, you can still expand your knowledge with one curated book per day.
+                                            </div>
                                         </div>
-                                    )}
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

@@ -17,6 +17,9 @@ export type BookData = {
   tags:string;
   bookDescription: string;
   authorDescription: string;
+  summary: string;
+  subscriptionRequired: boolean;
+  status: string;
 };
 
 type BookProps = {

@@ -11,6 +11,7 @@ import type { BookData } from "@/Components/Book";
 import { useAuth } from "@/app/context/AuthProvider";
 import { db } from "@/app/lib/firebase";
 import { doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
+import Link from "next/link";
 
 function Book() {
     const params = useParams<{ id: string }>();
@@ -225,15 +226,15 @@ function Book() {
                         </div>
 
                         <div className="flex gap-[16px] mb-[24px]">
-                            <button className="flex items-center justify-center w-[144px] h-[48px] bg-[#032b41] text-white text-[16px] rounded-sm cursor-pointer gap-[8px] transition-opacity duration-200 hover:opacity-[.8]">
+                            <Link href={`/player/${book.id}`} className="flex items-center justify-center w-[144px] h-[48px] bg-[#032b41] text-white text-[16px] rounded-sm cursor-pointer gap-[8px] transition-opacity duration-200 hover:opacity-[.8]">
                                 <LuBookOpenText className="h-[24px] w-[24px]" />
                                 <div>Read</div>
-                            </button>
+                            </Link>
 
-                            <button className="flex items-center justify-center w-[144px] h-[48px] bg-[#032b41] text-white text-[16px] rounded-sm cursor-pointer gap-[8px] transition-opacity duration-200 hover:opacity-[.8]">
+                            <Link href={`/player/${book.id}`} className="flex items-center justify-center w-[144px] h-[48px] bg-[#032b41] text-white text-[16px] rounded-sm cursor-pointer gap-[8px] transition-opacity duration-200 hover:opacity-[.8]">
                                 <HiOutlineMicrophone className="h-[24px] w-[24px]" />
                                 <div>Listen</div>
-                            </button>
+                            </Link>
                         </div>
 
                         <button

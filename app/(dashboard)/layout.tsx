@@ -1,6 +1,7 @@
 
 import Sidebar from "@/Components/Sidebar";
 import Searchbar from "@/Components/Searchbar";
+import { ReaderSettingsProvider } from "@/app/context/ReaderSettingsContext";
 
 export default function DashboardLayout({
   children,
@@ -8,7 +9,9 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
+    <ReaderSettingsProvider>
     <div className="flex min-h-screen">
+
       <Sidebar />
 
       <div className="ml-[200px] w-[calc(100%-200px)] min-w-0">
@@ -16,5 +19,6 @@ export default function DashboardLayout({
         <main>{children}</main>
       </div>
     </div>
+    </ReaderSettingsProvider>
   );
 }
