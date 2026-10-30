@@ -2,11 +2,52 @@
 import { useDispatch } from "react-redux";
 import { openModal } from "@/app/redux/modalSlice";
 import { useAuth } from "@/app/context/AuthProvider";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/app/lib/firebase";
 
 
 function Settings() {
     const dispatch = useDispatch();
     const { user, loading } = useAuth();
+    const [subscription, setSubscription] = useState<string | null>(null);
+    const [planLoading, setPlanLoading] = useState(true);
+
+    useEffect(() => {
+        if (!user) {
+    setPlanLoading(false);
+    return;
+}
+
+const userId = user.uid;
+
+async function fetchSubscription() {
+            setPlanLoading(true);
+
+            try {
+                const docRef = doc(db, "users", userId, "subscription", "current");
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    setSubscription(docSnap.data().plan);
+                } else {
+                    setSubscription(null);
+                }
+            } catch (error) {
+                console.error("Error fetching subscription:", error);
+                setSubscription(null);
+            } finally {
+                setPlanLoading(false);
+            }
+        }
+
+        fetchSubscription();
+    }, [user]);
+
+    if (loading) {
+    return <div>Loading settings...</div>;
+}
 
     if (!user) {
         return (
@@ -41,11 +82,24 @@ function Settings() {
                     </div>
                     <div className="flex flex-col items-start gap-[8px] mb-[32px] border-b border-[#e1e7ea] pb-[24px]">
                         <div className="text-[18px] font-bold text-[#032b41]">Your Subscription plan</div>
-                        <div className="text-[#032b41 ]">Premium-Plus</div>
+                        <div className="text-[#032b41]">
+                            {planLoading
+                                ? "Loading plan..."
+                                : subscription === "yearly"
+                                    ? "Premium Plus"
+                                    : subscription === "monthly"
+                                        ? "Premium"
+                                        : "No active plan"}
+                        </div>
+                        <Link href="/choose-plan" className="bg-[#2bd97c] text-[#032b41] w-full h-[40px] rounded-sm font-[16px] transition-colors duration-200 flex items-center justify-center min-w-[180px] max-w-[300px] hover:bg-[#20ba68] active:translate-y-[1px] cursor-pointer"
+                        >Upgrade Plan
+                        </Link>
                     </div>
                     <div className="flex flex-col gap-[8px] pb-[24px]">
                         <div className="text-[18px] font-bold text-[#032b41]">Email</div>
-                        <div className="text-[#032b41]">youremail@gmail.com</div>
+                        <div className="text-[#032b41]">
+                            {user.email ?? "No email available"}
+                        </div>
                     </div>
                 </div>
             </div>

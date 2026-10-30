@@ -6,6 +6,11 @@ import { TbRewindBackward10 } from "react-icons/tb";
 import { TbRewindForward10 } from "react-icons/tb";
 import { FaPlay } from "react-icons/fa";
 import { FaPause } from "react-icons/fa";
+import { useReaderSettings } from "@/app/context/ReaderSettingsContext";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/app/lib/firebase";
+import { useAuth } from "@/app/context/AuthProvider";
+
 
 
 
@@ -20,6 +25,7 @@ function Player() {
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
     const { fontSize } = useReaderSettings();
+    const { user } = useAuth();
 
 
     function formatTime(seconds: number) {
@@ -65,6 +71,33 @@ function Player() {
             audio.currentTime + 10
         )
     }
+
+    async function handleBookFinished() {
+        console.log("Audio finished! Attempting to save book.");
+    if (!user || !book) {
+    console.log("Cannot save finished book:", {
+        user: user?.uid,
+        book: book?.id
+    });
+    return;
+}
+
+    try {
+        await setDoc(
+            doc(db, "users", user.uid, "finishedBooks", book.id),
+            {
+                id: book.id,
+                title: book.title,
+                author: book.author,
+                imageLink: book.imageLink,
+            }
+        );
+
+        console.log("Book successfully marked as finished!");
+    } catch (error) {
+        console.error("Error saving finished book:", error);
+    }
+}
 
     useEffect(() => {
         if (!id) return;
@@ -122,7 +155,7 @@ function Player() {
                     preload="metadata"
                     onPlay={() => setIsPlaying(true)}
                     onPause={() => setIsPlaying(false)}
-                    onEnded={() => setIsPlaying(false)}
+                    onEnded={handleBookFinished}
                     onLoadedMetadata={(event) => {
                         setDuration(event.currentTarget.duration);
                     }}

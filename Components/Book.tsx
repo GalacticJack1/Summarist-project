@@ -20,6 +20,7 @@ export type BookData = {
   summary: string;
   subscriptionRequired: boolean;
   status: string;
+  duration: string;
 };
 
 type BookProps = {
@@ -52,7 +53,10 @@ function Book({ book }:BookProps) {
 
         
                     <Link href={`/book/${book.id}`} className="relative pt-[32px] py-[12px] no-underline rounded-sm max-w-[200px] w-full">
-                        <figure className="w-[172px] h-[172px]"><img src={book.imageLink} alt={book.title} /></figure>
+                        <figure className="w-[172px] h-[172px]">
+                        <img src={book.imageLink} alt={book.title} />
+                        {book.subscriptionRequired && (<div className="Book-pill absolute top-[8px] right-[8px] bg-[#032b41] h-[20px] w-[60px] text-[#fff] text-[12px]  rounded-full text-center"> Premium </div>)}
+                        </figure>
                         <div className="text-[16px] font-semibold text-[#032b41] mb-8px">{book.title}</div>
                         <div className="text-[14px] text-[#6b757b] font-light mb-8px">{book.author}</div>
                         <div className="text-[14px] text-[#394547] mb-8px">{book.subTitle}</div>

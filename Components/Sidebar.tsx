@@ -16,6 +16,7 @@ import { openModal } from "@/app/redux/modalSlice";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { useReaderSettings } from "@/app/context/ReaderSettingsContext";
+import { Suspense } from "react";
 
 function Sidebar() {
     const { user, loading } = useAuth();

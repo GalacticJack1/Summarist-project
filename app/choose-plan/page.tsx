@@ -7,12 +7,41 @@ import { IoIosArrowDown } from "react-icons/io";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { openModal } from "@/app/redux/modalSlice";
+import { useAuth } from "@/app/context/AuthProvider";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/app/lib/firebase";
+import { useRouter } from "next/navigation";
+
 
 function ChoosePlan() {
     const [openAccordion, setOpenAccordion] = useState<number | null>(null);
     const dispatch = useDispatch();
-    const [ selectedPlan, setSelectedPlan ] = useState("yearly")
+    const [selectedPlan, setSelectedPlan] = useState("yearly")
+    const { user } = useAuth();
+    const router = useRouter();
 
+    async function handleSelectPlan() {
+        if (!user) {
+            dispatch(openModal());
+            return;
+        }
+
+        try {
+            await setDoc(
+                doc(db, "users", user.uid, "subscription", "current"),
+                {
+                    plan: selectedPlan,
+                }
+            );
+
+            console.log("Plan selection saved!");
+
+            router.push("/settings");
+
+        } catch (error) {
+            console.error("Error saving plan:", error);
+        }
+    }
 
     return (
         <>
@@ -64,19 +93,19 @@ function ChoosePlan() {
                                 Choose the plan that fits you
                             </div>
 
-                            
 
 
-                            <button 
-                            type="button"
-                            onClick={() => setSelectedPlan("yearly")}
-                            className={`plan-card active:rounded-sm border-[#2be080] flex gap-[24px] p-[24px] bg-[#f1f6f4] rounded-sm border-[4px] cursor-pointer w-[680px] mx-auto transition-colors duration-100 
-                                ${selectedPlan === "yearly" ? "border-[#2be080]" : "border-[#bac8ce]" }`}
+
+                            <button
+                                type="button"
+                                onClick={() => setSelectedPlan("yearly")}
+                                className={`plan-card active:rounded-sm border-[#2be080] flex gap-[24px] p-[24px] bg-[#f1f6f4] rounded-sm border-[4px] cursor-pointer w-[680px] mx-auto transition-colors duration-100 
+                                ${selectedPlan === "yearly" ? "border-[#2be080]" : "border-[#bac8ce]"}`}
                             >
                                 <div className="plan-circle relative w-[24px] h-[24px] rounded-full border-[#000] border-[2px] flex items-center justify-center">
                                     {selectedPlan === "yearly" && (
-                                    <div className="plan-circle-dot absolute w-[6px] h-[6px] bg-[#000] rounded-full" />
-                                    )}                   
+                                        <div className="plan-circle-dot absolute w-[6px] h-[6px] bg-[#000] rounded-full" />
+                                    )}
                                 </div>
                                 <div className="card-content">
                                     <div className="text-[18px] font-semibold text-[#032b41] mb-[8px]">Premium Plus Yearly</div>
@@ -89,15 +118,15 @@ function ChoosePlan() {
                                 <div className="div">or</div>
                                 <div className="plan-separator flex-1 h-[1px] bg-[#bac8ce]"></div>
                             </div>
-                            <button 
-                            type="button"
-                            onClick={() => setSelectedPlan("monthly")}
-                            className={`plan-card rounded-sm flex gap-[24px] p-[24px] bg-[#f1f6f4] rounded-sm  border-[4px] cursor-pointer w-[680px] mx-auto transition-colors duration-100
+                            <button
+                                type="button"
+                                onClick={() => setSelectedPlan("monthly")}
+                                className={`plan-card rounded-sm flex gap-[24px] p-[24px] bg-[#f1f6f4] rounded-sm  border-[4px] cursor-pointer w-[680px] mx-auto transition-colors duration-100
                             ${selectedPlan === "monthly" ? "border-[#2be080]" : "border-[#bac8ce]"}`}>
                                 <div className="plan-circle relative w-[24px] h-[24px] rounded-full border-[#000] border-[2px] flex items-center justify-center">
                                     {selectedPlan === "monthly" && (
-                                    <div className="plan-circle-dot absolute w-[6px] h-[6px] bg-[#000] rounded-full" />
-                                    )}     
+                                        <div className="plan-circle-dot absolute w-[6px] h-[6px] bg-[#000] rounded-full" />
+                                    )}
                                 </div>
                                 <div className="card-content">
                                     <div className="text-[18px] font-semibold text-[#032b41] mb-[8px]">Premium Monthly</div>
@@ -107,7 +136,7 @@ function ChoosePlan() {
                             </button>
                             <div className="signup-container bg-[#fff] sticky bottom-0 z-1 p-[32px] flex flex-col items-center gap-[16px]">
                                 <span className="button-wrapper w-[300px] ">
-                                    <button  onClick={() => dispatch(openModal())} className="bg-[#2bd97c] text-[#032b41] h-[40px] rounded-sm text-[16px] transition-colors duration-[.2] flex items-center justify-center min-w-[180px] w-full cursor-pointer hover:bg-[#20ba68]">
+                                    <button onClick={handleSelectPlan} className="bg-[#2bd97c] text-[#032b41] h-[40px] rounded-sm text-[16px] transition-colors duration-[.2] flex items-center justify-center min-w-[180px] w-full cursor-pointer hover:bg-[#20ba68]">
                                         <span>
                                             {selectedPlan === "yearly" ? "Start your free 7 day trial!" : "Start your first month"}
                                         </span>
@@ -116,7 +145,7 @@ function ChoosePlan() {
                                 <div className="text-[12px] text-[#6b757b] text-center">{selectedPlan === "yearly" ? "Cancel your trial at any time before it ends, and you won’t be charged." : "30-day money back guarantee, no questions asked."}</div>
                             </div>
 
-                            
+
 
 
                             <div className="faq-wrapper">
@@ -134,7 +163,7 @@ function ChoosePlan() {
                                         </span>
 
                                         <IoIosArrowDown
-                                            className={`w-[24px] min-w-[24px] h-[24px] transition-transform duration-100 ${openAccordion === 1 ? "rotate-180" : "rotate-0"}`}/>
+                                            className={`w-[24px] min-w-[24px] h-[24px] transition-transform duration-100 ${openAccordion === 1 ? "rotate-180" : "rotate-0"}`} />
                                     </button>
 
                                     <div
@@ -231,7 +260,7 @@ function ChoosePlan() {
                                         className="accordion-header flex w-full justify-between items-center cursor-pointer py-[24px] gap-[8px] text-left"
                                     >
                                         <span className="accordion-title font-medium text-[24px] text-[#032b41]">
-                                           Can I cancel during my trial or subscription?
+                                            Can I cancel during my trial or subscription?
                                         </span>
 
                                         <IoIosArrowDown
@@ -245,8 +274,8 @@ function ChoosePlan() {
                                         id="trial-answer"
                                         inert={openAccordion !== 4}
                                         className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${openAccordion === 4
-                                                ? "grid-rows-[1fr]"
-                                                : "grid-rows-[0fr]"
+                                            ? "grid-rows-[1fr]"
+                                            : "grid-rows-[0fr]"
                                             }`}
                                     >
                                         <div className="overflow-hidden min-h-0">

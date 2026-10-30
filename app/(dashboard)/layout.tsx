@@ -2,6 +2,7 @@
 import Sidebar from "@/Components/Sidebar";
 import Searchbar from "@/Components/Searchbar";
 import { ReaderSettingsProvider } from "@/app/context/ReaderSettingsContext";
+import { Suspense } from "react";
 
 export default function DashboardLayout({
   children,
@@ -11,8 +12,10 @@ export default function DashboardLayout({
   return (
     <ReaderSettingsProvider>
     <div className="flex min-h-screen">
+      <Suspense fallback={null}>
 
       <Sidebar />
+      </Suspense>
 
       <div className="ml-[200px] w-[calc(100%-200px)] min-w-0">
         <Searchbar />

@@ -7,11 +7,21 @@ import { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "@/app/lib/firebase";
 import Link from "next/link";
+import React from 'react';
+import dynamic from "next/dynamic";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import { Navigation } from "swiper/modules";
+import "swiper/css/navigation";
+
+
+
 
 
 function Library() {
     const dispatch = useDispatch();
     const { user, loading } = useAuth();
+
 
     type SavedBook = {
         id: string;
@@ -22,11 +32,13 @@ function Library() {
 
     const [savedBooks, setSavedBooks] = useState<SavedBook[]>([]);
     const [booksLoading, setBooksLoading] = useState(true);
+    const [finishedBooks, setFinishedBooks] = useState<SavedBook[]>([]);
 
     useEffect(() => {
         if (!user) {
             setSavedBooks([]);
             setBooksLoading(false);
+            setFinishedBooks([]);
             return;
         }
 
@@ -53,6 +65,23 @@ function Library() {
 
                 if (!cancelled) {
                     setSavedBooks(books);
+                }
+
+                const finishedRef = collection(
+                    db,
+                    "users",
+                    user.uid,
+                    "finishedBooks"
+                );
+
+                const finishedSnapshot = await getDocs(finishedRef);
+
+                const finished = finishedSnapshot.docs.map((doc) => {
+                    return doc.data() as SavedBook;
+                });
+
+                if (!cancelled) {
+                    setFinishedBooks(finished);
                 }
             } catch (error) {
                 console.error("Error fetching saved books:", error);
@@ -146,11 +175,47 @@ function Library() {
                         Finished
                     </div>
                     <div className="font-light text-[#394547] mb-[16px]">
-                        (number) items
+                        {finishedBooks.length} items
                     </div>
-                    <div className="flex overflow-x-auto gap-[16px] mb-[32px]">
-                        (BOOKS)
+
+                    <div className="flex gap-[16px] mb-[32px]">
+                        {booksLoading ? (
+                            <p>Loading finished books...</p>
+                        ) : finishedBooks.length === 0 ? (
+                            <p>You haven't finished any books yet.</p>
+                        ) : (
+                            <Swiper 
+                            slidesPerView="auto" 
+                            spaceBetween={16}
+                            modules={[Navigation]}
+                            navigation
+                            className="finished-carousel"                             >
+                                {finishedBooks.map((book) => (
+                                    <SwiperSlide
+                                        key={book.id}
+                                        style={{ width: "172px" }}
+                                    >
+                                        <Link href={`/book/${book.id}`}>
+                                            <img
+                                                src={book.imageLink}
+                                                alt={book.title}
+                                                className="w-full h-[230px] object-cover mb-[8px]"
+                                            />
+
+                                            <div className="font-semibold text-[#032b41] text-[16px]">
+                                                {book.title}
+                                            </div>
+
+                                            <div className="text-[#6b757b] text-[14px]">
+                                                {book.author}
+                                            </div>
+                                        </Link>
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
+                        )}
                     </div>
+
                 </div>
             </div>
         </>
