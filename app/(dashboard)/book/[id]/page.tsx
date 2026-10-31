@@ -12,20 +12,18 @@ import { useAuth } from "@/app/context/AuthProvider";
 import { db } from "@/app/lib/firebase";
 import { doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
 import Link from "next/link";
+import { Suspense } from "react";
 
-function Book() {
+function BookContent() {
     const params = useParams<{ id: string }>();
     const id = params.id;
-
     const [book, setBook] = useState<BookData | null>(null);
     const [loading, setLoading] = useState(true);
     const [duration, setDuration] = useState<string>("--:--");
-
     const { user } = useAuth();
     const [isSaved, setIsSaved] = useState(false);
     const [saving, setSaving] = useState(false);
 
-    // Fetch book information from the API
     useEffect(() => {
         async function fetchBook() {
             setLoading(true);
@@ -53,7 +51,6 @@ function Book() {
         fetchBook();
     }, [id]);
 
-    // Check whether this book is saved in Firestore
     useEffect(() => {
         if (!user) {
             setIsSaved(false);
@@ -86,7 +83,6 @@ function Book() {
         };
     }, [user, id]);
 
-    // Add or remove a book from the user's library
     async function handleSaveBook() {
         if (!user || !book || saving) return;
 
@@ -300,4 +296,10 @@ function Book() {
     );
 }
 
-export default Book;
+export default function BookPage() {
+    return (
+        <Suspense fallback={<div>Loading book...</div>}>
+            <BookContent />
+        </Suspense>
+    );
+}
