@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import type { BookData } from "@/Components/Book";
 import Link from "next/link";
 import { FaXmark } from "react-icons/fa6";
+import { IoIosMenu } from "react-icons/io";
+import NavMenu from "./NavMenu";
 
 function Searchbar() {
   const [search, setSearch] = useState("");
@@ -12,6 +14,9 @@ function Searchbar() {
   const [books, setBooks] = useState<BookData[]>([]);
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [ navMenu, setNavMenu ] = useState(false);
+
+  
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -28,6 +33,7 @@ function Searchbar() {
       setLoading(false);
       return;
     }
+
 
     const controller = new AbortController();
 
@@ -70,7 +76,7 @@ function Searchbar() {
 
 
   return (
-    <div className="flex items-center justify-end h-[80px] px-[32px] border-b bg-white">
+    <div className=" flex items-center justify-center md:justify-end h-[80px] px-[32px] border-b bg-white">
       <div className="relative w-[340px]">
         <div className="relative w-full max-w-[500px]">
           <input
@@ -147,6 +153,17 @@ function Searchbar() {
           )}
         </button>
       </div>
+      <button 
+      onClick={() => setNavMenu(true)}      
+      className="cursor-pointer">
+      <IoIosMenu className="md:hidden min-w-[40px] min-w-[40px] w-[full] h-full"/>
+      </button>
+
+      {navMenu && <NavMenu onClose={() => setNavMenu(false)} />}
+
+
+
+
     </div>
   )
 }

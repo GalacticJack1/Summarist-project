@@ -99,7 +99,7 @@ function ChoosePlan() {
                             <button
                                 type="button"
                                 onClick={() => setSelectedPlan("yearly")}
-                                className={`plan-card active:rounded-sm border-[#2be080] flex gap-[24px] p-[24px] bg-[#f1f6f4] rounded-sm border-[4px] cursor-pointer w-[680px] mx-auto transition-colors duration-100 
+                                className={`plan-card active:rounded-sm border-[#2be080] flex gap-[24px] p-[24px] bg-[#f1f6f4] rounded-sm border-[4px] cursor-pointer w-full max-w-[680px] min-w-[400px] mx-auto transition-colors duration-100 
                                 ${selectedPlan === "yearly" ? "border-[#2be080]" : "border-[#bac8ce]"}`}
                             >
                                 <div className="plan-circle relative w-[24px] h-[24px] rounded-full border-[#000] border-[2px] flex items-center justify-center">
@@ -112,7 +112,7 @@ function ChoosePlan() {
                                     <div className="text-[24px] font-bold text-[#032b41] mb-[8px]">$99.99/year</div>
                                     <div className="text-[#6b757b] text-[14px]">7-day trial included</div>
                                 </div>
-                            </button>
+                            </ button>
                             <div className="plan-separator text-[14px] text-[#6b757b] flex items-center gap-[8px] max-w-[240px] mt-[24px] mb-[24px] mx-auto">
                                 <div className="plan-separator flex-1 h-[1px] bg-[#bac8ce]"></div>
                                 <div className="div">or</div>
@@ -121,7 +121,7 @@ function ChoosePlan() {
                             <button
                                 type="button"
                                 onClick={() => setSelectedPlan("monthly")}
-                                className={`plan-card rounded-sm flex gap-[24px] p-[24px] bg-[#f1f6f4] rounded-sm  border-[4px] cursor-pointer w-[680px] mx-auto transition-colors duration-100
+                                className={`plan-card rounded-sm flex gap-[24px] p-[24px] bg-[#f1f6f4] rounded-sm  border-[4px] cursor-pointer w-full max-w-[680px] min-w-[400px] mx-auto transition-colors duration-100
                             ${selectedPlan === "monthly" ? "border-[#2be080]" : "border-[#bac8ce]"}`}>
                                 <div className="plan-circle relative w-[24px] h-[24px] rounded-full border-[#000] border-[2px] flex items-center justify-center">
                                     {selectedPlan === "monthly" && (

@@ -134,7 +134,7 @@ function Library() {
     return (
         <>
             <div className="max-w-[1070px] w-full mx-auto px-[24px]">
-                <div className="py-[40px] w-full">
+                <div className="text-center md:text-left py-[40px] w-full items-center mx-0">
                     <div className="text-[22px] font-bold text-[#032b41] mb-[16px]">
                         Saved Books
                     </div>
@@ -142,7 +142,7 @@ function Library() {
                         {savedBooks.length} items
                     </div>
 
-                    <div className="flex overflow-x-auto gap-[16px] mb-[32px]">
+                    <div className="flex justify-center md:justify-start overflow-x-auto gap-[16px] mb-[32px]">
                         {booksLoading ? (
                             <p>Loading saved books...</p>
                         ) : savedBooks.length === 0 ? (
@@ -178,11 +178,11 @@ function Library() {
                         {finishedBooks.length} items
                     </div>
 
-                    <div className="flex gap-[16px] mb-[32px]">
+                    <div className="flex justify-center md:justify-start gap-[16px] mb-[32px] text-center md:text-left">
                         {booksLoading ? (
                             <p>Loading finished books...</p>
                         ) : finishedBooks.length === 0 ? (
-                            <p>You haven't finished any books yet.</p>
+                            <p >You haven't finished any books yet.</p>
                         ) : (
                             <Swiper 
                             slidesPerView="auto" 

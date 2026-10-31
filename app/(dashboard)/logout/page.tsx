@@ -7,8 +7,8 @@ function Logout() {
     const dispatch = useDispatch();
     return(
         <div className="p-[40px] w-full">
-                    <div className="max-w-[1070px] w-full mx-auto px-[24px]">
-                        <div className="text-left border-b border-[#e1e7ea] pb-[16px] text-[32px] text-[#032b41] mb-[32px] font-bold">
+                    <div className="max-w-[1070px] w-full mx-auto px-[24px] text-center">
+                        <div className="md:text-left text-center border-b border-[#e1e7ea] pb-[16px] text-[32px] text-[#032b41] mb-[32px] font-bold">
                             Login
                         </div>
                         <div className="max-w-[460px] flex flex-col items-center mx-auto">

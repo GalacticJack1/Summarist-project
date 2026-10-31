@@ -52,8 +52,8 @@ async function fetchSubscription() {
     if (!user) {
         return (
             <>
-                <div className="p-[40px] w-full">
-                    <div className="max-w-[1070px] w-full mx-auto px-[24px]">
+                <div className="p-[40px] w-full ">
+                    <div className="max-w-[1070px] w-full mx-auto px-[24px] ">
                         <div className="text-left border-b border-[#e1e7ea] pb-[16px] text-[32px] text-[#032b41] mb-[32px] font-bold">
                             Settings
                         </div>
@@ -75,12 +75,12 @@ async function fetchSubscription() {
 
     return (
         <>
-            <div className="p-[40px] w-full">
+            <div className="p-[40px] w-full text-center md:text-left">
                 <div className="max-w-[1070px] w-full mx-auto px-[24px]">
-                    <div className="text-left border-b border-[#e1e7ea] pb-[16px] text-[32px] text-[#032b41] mb-[32px] font-bold">
+                    <div className="md:text-left text-center border-b border-[#e1e7ea] pb-[16px] text-[32px] text-[#032b41] mb-[32px] font-bold">
                         Settings
                     </div>
-                    <div className="flex flex-col items-start gap-[8px] mb-[32px] border-b border-[#e1e7ea] pb-[24px]">
+                    <div className="items-center mx-auto text-center md:text-left flex flex-col md:items-start gap-[8px] mb-[32px] border-b border-[#e1e7ea] pb-[24px]">
                         <div className="text-[18px] font-bold text-[#032b41]">Your Subscription plan</div>
                         <div className="text-[#032b41]">
                             {planLoading
@@ -91,7 +91,7 @@ async function fetchSubscription() {
                                         ? "Premium"
                                         : "No active plan"}
                         </div>
-                        <Link href="/choose-plan" className="bg-[#2bd97c] text-[#032b41] w-full h-[40px] rounded-sm font-[16px] transition-colors duration-200 flex items-center justify-center min-w-[180px] max-w-[300px] hover:bg-[#20ba68] active:translate-y-[1px] cursor-pointer"
+                        <Link href="/choose-plan" className="bg-[#2bd97c] justify-center text-[#032b41] w-full h-[40px] rounded-sm font-[16px] transition-colors duration-200 flex items-center min-w-[180px] max-w-[300px] hover:bg-[#20ba68] active:translate-y-[1px] cursor-pointer"
                         >Upgrade Plan
                         </Link>
                     </div>

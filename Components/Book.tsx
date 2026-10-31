@@ -52,7 +52,7 @@ function Book({ book }:BookProps) {
     />
 
         
-                    <Link href={`/book/${book.id}`} className="relative pt-[32px] py-[12px] no-underline rounded-sm max-w-[200px] w-full">
+                    <Link href={`/book/${book.id}`} className="relative flex flex-col pt-[32px] py-[12px] no-underline rounded-sm max-w-[200px] w-full">
                         <figure className="w-[172px] h-[172px]">
                         <img src={book.imageLink} alt={book.title} />
                         {book.subscriptionRequired && (<div className="Book-pill absolute top-[8px] right-[8px] bg-[#032b41] h-[20px] w-[60px] text-[#fff] text-[12px]  rounded-full text-center"> Premium </div>)}
@@ -60,7 +60,7 @@ function Book({ book }:BookProps) {
                         <div className="text-[16px] font-semibold text-[#032b41] mb-8px">{book.title}</div>
                         <div className="text-[14px] text-[#6b757b] font-light mb-8px">{book.author}</div>
                         <div className="text-[14px] text-[#394547] mb-8px">{book.subTitle}</div>
-                        <div className="flex gap-[8px]">
+                        <div className=" mt-auto w-full pt-[8px] flex gap-[8px]">
                             <div className="flex items-center gap-[4px] text-[14px] font-light text-[#6b757b]" >
                               <div className="div"><FaRegClock /></div>
                               <div className="div">{duration}</div>

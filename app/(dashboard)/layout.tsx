@@ -17,7 +17,7 @@ export default function DashboardLayout({
       <Sidebar />
       </Suspense>
 
-      <div className="ml-[200px] w-[calc(100%-200px)] min-w-0">
+      <div className="w-full md:w-[calc(100%-200px)] ml-0 md:ml-[200px]">
         <Searchbar />
         <main>{children}</main>
       </div>

@@ -27,12 +27,12 @@ function SuggestedBooks() {
 
 
     return (
-    <div className="px-[40px] w-full max-w-[1070px] mx-auto">
+    <div className="px-[40px] w-full max-w-[1070px] mx-auto mb-[32px]">
         <div className="text-[22px] text-[#032b41] font-bold mb-[16px]">
             Suggested books
         </div>
         <div className="font-light text-[#394547] mb-[16px]">Browse the books</div>
-       <div className="flex gap-[16px] overflow-x-auto">
+       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-[16px] pb-[16px]">
         {loading ?
         Array.from({ length: 5 }).map((_, index) => (
             <BookSkeleton key={index} />
