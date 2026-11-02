@@ -182,10 +182,19 @@ function BookContent() {
             />
 
             <div className="py-[40px] w-full">
-                <div className="flex gap-[16px]">
-                    <div className="flex-1 min-w-0">
+                <div className="mx-auto flex md:flex gap-[16px] text-center md:text-left ">
+                    <div className="flex-1 text-center md:text-left ">
+                        <div>
+                        <figure className="md:hidden min-w-[300px] max-h-[300px] max-w-[300px] w-full h-full mx-auto">
+                            <img
+                                className="max-h-[300px] max-w-[300px] w-full h-full"
+                                src={book.imageLink}
+                                alt={book.title}
+                            />
+                        </figure>
+                    </div>
                         <div className="text-[#032b41] text-[32px] mb-[16px] font-semibold">
-                            {book.title}
+                            {book.title} 
                         </div>
 
                         <div>
@@ -196,25 +205,25 @@ function BookContent() {
                             {book.subTitle}
                         </div>
 
-                        <div className="border-t-[#e1e7ea] border-b-[#e1e7ea] border-t border-b py-[16px] mb-[24px]">
-                            <div className="flex flex-wrap max-w-[400px] gap-y-3">
-                                <div className="flex items-center w-[50%] text-[#032b41] font-medium text-[14px]">
+                        <div className="mx-auto md:mx-0 items-center border-t-[#e1e7ea] border-b-[#e1e7ea] border-t border-b py-[16px] mb-[24px]">
+                            <div className="grid grid-cols-2 gap-x-[24px] gap-y-[12px] w-fit mx-auto md:mx-0">
+                                <div className="flex items-center text-[#032b41] font-medium text-[14px]">
                                     <FaRegStar className="h-[24px] w-[24px] mr-[4px]" />
                                     <div className="mr-[4px]">{book.averageRating}</div>
                                     <div>({book.totalRating})</div>
                                 </div>
 
-                                <div className="flex items-center w-[50%] text-[#032b41] font-medium text-[14px]">
+                                <div className="flex items-center text-[#032b41] font-medium text-[14px]">
                                     <FaRegClock className="h-[24px] w-[24px] mr-[4px]" />
                                     <div>{duration}</div>
                                 </div>
 
-                                <div className="flex items-center w-[50%] text-[#032b41] font-medium text-[14px]">
+                                <div className="flex items-center text-[#032b41] font-medium text-[14px]">
                                     <HiOutlineMicrophone className="h-[24px] w-[24px] mr-[4px]" />
                                     <div>{book.type}</div>
                                 </div>
 
-                                <div className="flex items-center w-[50%] text-[#032b41] font-medium text-[14px]">
+                                <div className="flex items-center text-[#032b41] font-medium text-[14px]">
                                     <HiOutlineLightBulb className="h-[24px] w-[24px] mr-[4px]" />
                                     <div>{book.keyIdeas} Key ideas</div>
                                 </div>
@@ -222,12 +231,12 @@ function BookContent() {
                         </div>
 
                         <div className="flex gap-[16px] mb-[24px]">
-                            <Link href={`/player/${book.id}`} className="flex items-center justify-center w-[144px] h-[48px] bg-[#032b41] text-white text-[16px] rounded-sm cursor-pointer gap-[8px] transition-opacity duration-200 hover:opacity-[.8]">
+                            <Link href={`/player/${book.id}`} className="mx-auto md:mx-0 flex items-center justify-center w-[144px] h-[48px] bg-[#032b41] text-white text-[16px] rounded-sm cursor-pointer gap-[8px] transition-opacity duration-200 hover:opacity-[.8]">
                                 <LuBookOpenText className="h-[24px] w-[24px]" />
                                 <div>Read</div>
                             </Link>
 
-                            <Link href={`/player/${book.id}`} className="flex items-center justify-center w-[144px] h-[48px] bg-[#032b41] text-white text-[16px] rounded-sm cursor-pointer gap-[8px] transition-opacity duration-200 hover:opacity-[.8]">
+                            <Link href={`/player/${book.id}`} className="mx-auto md:mx-0 flex items-center justify-center w-[144px] h-[48px] bg-[#032b41] text-white text-[16px] rounded-sm cursor-pointer gap-[8px] transition-opacity duration-200 hover:opacity-[.8]">
                                 <HiOutlineMicrophone className="h-[24px] w-[24px]" />
                                 <div>Listen</div>
                             </Link>
@@ -237,7 +246,7 @@ function BookContent() {
                             type="button"
                             onClick={handleSaveBook}
                             disabled={!user || saving}
-                            className="flex items-center gap-[8px] text-[#0365f2] font-medium cursor-pointer mb-[40px] text-[18px] transition-colors duration-200 hover:text-[#044298] disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="flex items-center gap-[8px] text-[#0365f2] font-medium cursor-pointer mb-[40px] text-[18px] transition-colors duration-200 hover:text-[#044298] disabled:opacity-50 disabled:cursor-not-allowed mx-auto md:mx-0"
                         >
                             {isSaved ? (
                                 <FaBookmark className="w-[20px] h-[20px]" />
@@ -258,7 +267,7 @@ function BookContent() {
                             What's it about?
                         </div>
 
-                        <div className="flex flex-wrap gap-[16px] mb-[16px]">
+                        <div className="flex flex-wrap gap-[16px] mb-[16px] mx-auto justify-center md:justify-start">
                             <div className="bg-[#f1f6f4] px-[16px] h-[48px] flex items-center text-[#032b41] font-medium rounded-sm">
                                 {book.tags[0]}
                             </div>
@@ -282,9 +291,9 @@ function BookContent() {
                     </div>
 
                     <div>
-                        <figure className="h-[300px] w-[300px] min-w-[300px]">
+                        <figure className="hidden md:flex min-w-[300px] max-h-[300px] max-w-[300px] w-full h-full">
                             <img
-                                className="w-full h-full"
+                                className="max-h-[300px] max-w-[300px] w-full h-full"
                                 src={book.imageLink}
                                 alt={book.title}
                             />

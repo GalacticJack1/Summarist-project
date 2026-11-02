@@ -8,8 +8,6 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { openModal } from "@/app/redux/modalSlice";
 import { useAuth } from "@/app/context/AuthProvider";
-import { doc, setDoc } from "firebase/firestore";
-import { db } from "@/app/lib/firebase";
 import { useRouter } from "next/navigation";
 
 
@@ -18,7 +16,6 @@ function ChoosePlan() {
     const dispatch = useDispatch();
     const [selectedPlan, setSelectedPlan] = useState("yearly")
     const { user } = useAuth();
-    const router = useRouter();
 
     async function handleSelectPlan() {
         if (!user) {
@@ -27,21 +24,32 @@ function ChoosePlan() {
         }
 
         try {
-            await setDoc(
-                doc(db, "users", user.uid, "subscription", "current"),
-                {
-                    plan: selectedPlan,
-                }
-            );
+    const response = await fetch("/api/checkout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        plan: selectedPlan,
+      }),
+    });
 
-            console.log("Plan selection saved!");
+    const data = await response.json();
 
-            router.push("/settings");
-
-        } catch (error) {
-            console.error("Error saving plan:", error);
-        }
+    if (!response.ok) {
+      throw new Error(data.error || "Failed to start checkout");
     }
+
+    if (!data.url) {
+      throw new Error("Stripe did not return a checkout URL");
+    }
+
+    window.location.assign(data.url);
+  } catch (error) {
+    console.error("Checkout error:", error);
+    alert("Something went wrong starting checkout. Please try again.");
+  }
+}
 
     return (
         <>

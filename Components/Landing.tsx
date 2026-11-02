@@ -12,8 +12,8 @@ function Landing() {
         <>
         <section id="landing">
       <div className="py-[40px] w-full">
-        <div className="max-w-[1070px] w-full m-auto py-[24px]">
-          <div className="flex">
+        <div className="max-w-[1070px] w-full py-[24px] px-[24px] mx-auto">
+          <div className="flex flex-col md:flex-row gap-[24px]">
             <div className="w-full">
               <div className="text-[#032b41] text-[40px] font-bold mb-[24px] ">
                 Gain more knowledge <br className="hidden md:block" />
